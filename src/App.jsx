@@ -1,35 +1,60 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import Button from "./componets/Button/Button";
+import CardButton from "./componets/CardButton/CardButton";
+import JournalItem from "./componets/JournalItem/JournalItem";
+import Header from "./componets/Header/Header";
+import JournalAddButton from "./componets/JournalAddButton/JournalAddButton";
+import JournalList from "./componets/Journallist/Journallist";
+import LeftPanel from "./Layouls/Body/LeftPanel/LeftPanel";
+import Body from "./Layouls/Body/Body/Body";
+import JournalFrom from "./componets/JournalFrom/JournalFrom";
+import { useState } from "react";
+
+// const data = [
+//   {
+//     title: "Подготовка к обновлению курсов",
+//     text: "Сегодня провёл весь день за...",
+//     date: new Date(),
+//     id: "1",
+//   },
+
+//   {
+//     title: "Поход в горы",
+//     text: "Думал, что очень много времени",
+//     date: new Date(),
+//     id: "2",
+//   },
+// ];
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [itmes, setItems] = useState([]);
+
+  const addItem = (item) => {
+    setItems((oldItems) => [
+      ...oldItems,
+      {
+        text: item.text,
+        title: item.title,
+        date: new Date(),
+        id: Math.floor(Math.random() * 1000),
+      },
+    ]);
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="app">
+      <LeftPanel>
+        <Header />
+
+        <JournalAddButton />
+
+        <JournalList items={itmes} />
+      </LeftPanel>
+
+      <body>
+        <JournalFrom onSubmit={addItem} />
+      </body>
+    </div>
+  );
 }
 
-export default App
+export default App;
